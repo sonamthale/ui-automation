@@ -44,16 +44,9 @@ public class FacebookHomePage {
     }
 
     public void getLatestPosts(){
-       Iterator<WebElement> itr = latestPosts().iterator();
-       while(itr.hasNext())
-       {
-            System.out.println(itr.next().getText());
-       }
-
-        for (int i=1; i<=latestPosts().size(); i++)
-        {
-            System.out.println(latestPosts());
+       List<WebElement> latestPosts = latestPosts();
+        for (WebElement webElement : latestPosts) {
+            webElement.getText();
         }
-
     }
 }
