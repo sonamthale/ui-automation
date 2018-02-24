@@ -5,6 +5,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class FacebookHomePage {
@@ -14,19 +15,45 @@ public class FacebookHomePage {
         this.driver = driver;
     }
 
-    private WebElement searchTextBox(){
-        return driver.findElement(By.xpath("//input[@class=\"_1frb\"]"));
-    }
-
-    private List<WebElement> friendList() {
+    private List<WebElement> latestPosts()
+    {
         return driver.findElements(
-                By.xpath("//span[text()='People' and @role='heading']/parent::div/following-sibling::div/descendant::a"));
+                By.xpath("//div[@class='_1dwg _1w_m _q7o']"));
     }
 
+    private WebElement postGrid() {
+        return driver.findElement(By.xpath("//div[@aria-label=\"Create a post\"]"));
+    }
 
-    public void searchFriend(){
-        searchTextBox().sendKeys("Daivesh Patil");
-        searchTextBox().sendKeys(Keys.ENTER);
-        friendList().get(0).click();
+    private WebElement newPost() {
+        return driver.findElement(
+                By.xpath("//div[@data-testid='status-attachment-mentions-input']"));
+    }
+
+    private WebElement postButton() {
+        return driver.findElement(
+                By.xpath("//span[text()='Post']/ancestor::button[@type='submit']"));
+    }
+
+    public void postNewStatus() throws InterruptedException {
+        Thread.sleep(2000);
+        postGrid().click();
+        Thread.sleep(2000);
+        newPost().sendKeys("Good Evening All");
+        postButton().sendKeys(Keys.ENTER);
+    }
+
+    public void getLatestPosts(){
+       Iterator<WebElement> itr = latestPosts().iterator();
+       while(itr.hasNext())
+       {
+            System.out.println(itr.next().getText());
+       }
+
+        for (int i=1; i<=latestPosts().size(); i++)
+        {
+            System.out.println(latestPosts());
+        }
+
     }
 }
