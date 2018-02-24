@@ -1,10 +1,9 @@
-package com.home;
+package com.automation.tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
 
 /**
  * Created by abc on 21-02-2018.

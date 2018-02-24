@@ -1,4 +1,4 @@
-package com.com.interfacedemo;
+package com.oops.interfacedemo;
 
 /**
  * Created by abc on 21-02-2018.

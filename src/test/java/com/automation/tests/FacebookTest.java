@@ -1,7 +1,8 @@
-package com.home;
+package com.automation.tests;
 
+import com.automation.pages.FacebookHomePage;
+import com.automation.pages.FacebookLoginPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,10 +16,31 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by abc on 21-02-2018.
  */
-public class FacebookLogin
+public class FacebookTest
 {
     public static void main(String [] args) throws InterruptedException {
+        new FacebookTest().getFriendCurrentStatus();
+    }
 
+    public void getFriendCurrentStatus(){
+        //Creating WebDriver instance
+        ChromeOptions chrome_Profile = new ChromeOptions();
+        chrome_Profile.addArguments("--disable-notifications");
+        File file = new File("chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+        WebDriver driver = new ChromeDriver(chrome_Profile);
+        driver.get("https://www.facebook.com");
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        //Test
+        FacebookLoginPage facebookLoginPage = new FacebookLoginPage(driver);
+        facebookLoginPage.login();
+        FacebookHomePage facebookHomePage = new FacebookHomePage(driver);
+        facebookHomePage.searchFriend();
+        WebElement status = driver.findElement(By.xpath("//div[@class=\"_50f9 _50f3\"]"));
+    }
+
+    public void getMyPosts(){
         ChromeOptions chrome_Profile = new ChromeOptions();
         /*chrome_Profile.addArguments("chrome.switches","--disable-extensions");
         chrome_Profile.addArguments("--disable-save-password");
@@ -40,29 +62,15 @@ public class FacebookLogin
 
         WebElement login = driver.findElement(By.xpath("//label[@id='loginbutton']"));
         login.click();
-
-        /*WebElement search = driver.findElement(By.xpath("//button[@class=\"_42ft _4jy0 _4w98 _4jy3 _517h _51sy\"]"));
-        search.click();*/
-        WebElement search1 = driver.findElement(By.xpath("//input[@class=\"_1frb\"]"));
-        search1.sendKeys("Daivesh Patil");
-        search1.sendKeys(Keys.ENTER);
-        //span[text()='People' and @role='heading']/parent::div/following-sibling::div/descendant::a
-        List<WebElement> friendList = driver.
-                findElements(By.xpath("//span[text()='People' and @role='heading']/parent::div/following-sibling::div/descendant::a"));
-        friendList.get(0).click();
-
-        String status = driver.findElement(By.xpath("//div[@class=\"_50f9 _50f3\"]")).getText();
-        System.out.println(status);
-
-        /*String content = driver.findElement(By.tagName("body")).getText();
+        String content = driver.findElement(By.tagName("body")).getText();
         //String content = driver.getPageSource();
         System.out.println(content);
 
         List<WebElement> list= driver.findElements(By.xpath("//div[@class=\"_1dwg _1w_m _q7o\"]"));
         System.out.println("Total selected rows are " + list.size());
 
-        List<WebElement> list= driver.findElements(By.xpath("//div[@class=\"_5pcr userContentWrapper\"]"));
-        System.out.println("Total selected rows are " + list.size());
+//        List<WebElement> list = driver.findElements(By.xpath("//div[@class=\"_5pcr userContentWrapper\"]"));
+//        System.out.println("Total selected rows are " + list.size());
 
         for (int i=1; i<=list.size(); i++)
         {
@@ -70,10 +78,10 @@ public class FacebookLogin
             System.out.println(i);
         }
 
-        /*Iterator<WebElement> itr = list.iterator();
+        Iterator<WebElement> itr = list.iterator();
         while(itr.hasNext())
         {
             System.out.println(itr.next().getText());
-        }*/
+        }
     }
 }

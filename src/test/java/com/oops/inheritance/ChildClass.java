@@ -1,4 +1,4 @@
-package com.inheritance;
+package com.oops.inheritance;
 
 /**
  * Created by abc on 21-02-2018.
