@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -23,8 +24,8 @@ public class FacebookLogin
         chrome_Profile.addArguments("--disable-save-password");
         chrome_Profile.addArguments("disable-infobars");*/
         chrome_Profile.addArguments("--disable-notifications");
-
-        System.setProperty("webdriver.chrome.driver", "E:\\Automaton-Workspace\\ui-automation\\chromedriver.exe");
+        File file = new File("chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
         WebDriver driver = new ChromeDriver(chrome_Profile);
         //WebDriver driver = new ChromeDriver();
         driver.get("https://www.facebook.com");
@@ -45,9 +46,10 @@ public class FacebookLogin
         WebElement search1 = driver.findElement(By.xpath("//input[@class=\"_1frb\"]"));
         search1.sendKeys("Daivesh Patil");
         search1.sendKeys(Keys.ENTER);
-
-        WebElement friend = driver.findElement(By.xpath("//a[@href=\"/profile.php?id=100000595442423&ref=br_rs\"]/div[contains(text(), 'Daivesh Patil')]"));
-        friend.click();
+        //span[text()='People' and @role='heading']/parent::div/following-sibling::div/descendant::a
+        List<WebElement> friendList = driver.
+                findElements(By.xpath("//span[text()='People' and @role='heading']/parent::div/following-sibling::div/descendant::a"));
+        friendList.get(0).click();
 
         String status = driver.findElement(By.xpath("//div[@class=\"_50f9 _50f3\"]")).getText();
         System.out.println(status);
