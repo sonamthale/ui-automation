@@ -1,0 +1,13 @@
+<suite name="Regression" verbose="1" parallel="true" thread-count="5">
+    <test name="RegressionTest">
+        <groups>
+            <run>
+                <exclude name="notCompleted"/>
+                <include name="regression"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.automation.tests.FacebookTest"/>
+        </classes>
+    </test>
+</suite>

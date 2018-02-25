@@ -9,15 +9,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class TestNgTests {
-    @BeforeSuite(alwaysRun = true)
-    public void beforeSuite() {
-        System.out.println("Before Suite");
-    }
-
-    @BeforeClass(alwaysRun = true)
-    public void beforeClass() {
-        System.out.println("Before Class");
-    }
 
     @BeforeMethod(alwaysRun = true)
     public void beforeMethod() {

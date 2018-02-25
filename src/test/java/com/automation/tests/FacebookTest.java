@@ -8,10 +8,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,49 +23,52 @@ import java.util.concurrent.TimeUnit;
 
 public class FacebookTest {
 
-    long startTime = System.currentTimeMillis();
+    @BeforeSuite(alwaysRun = true)
+    public void beforeSuite(){
+        System.out.println("Start Time" +
+                new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date().getTime()));
+    }
 
-    long endTime = System.currentTimeMillis();
+    @AfterSuite(alwaysRun = true)
+    public void afterSuite(){
+        System.out.println("End Time"+
+                new SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z").format(new Date().getTime()));
+    }
 
-    long executionTime = endTime - startTime;
-
-    //TODO: Console Log Starting timestamp of suite
-    //TODO: Console Log ending timestamp of suite Hint Before and After Class
-    //TODO: Create Separate Smoke and Regression Suite Test Ng Xml
-    @Test(groups = {"Smoke", "Regression"})
+    @Test(groups = {"Smoke", "regression", "debug"})
     public void getFriendCurrentStatus() {
-        System.out.println(java.util.concurrent.TimeUnit.MILLISECONDS.toMinutes(executionTime));
-
         WebDriver driver = WebDriverServices.getWebDriverInstance();
         driver.get("https://www.facebook.com");
         FacebookLoginPage facebookLoginPage = new FacebookLoginPage(driver);
-        facebookLoginPage.login("","");
+        facebookLoginPage.login("sonam.thale09@gmail.com", "Narendra@143");
         FacebookSearchPage facebookSearchPage = new FacebookSearchPage(driver);
         facebookSearchPage.searchFriend();
         WebElement status = driver.findElement(By.xpath("//div[@class=\"_50f9 _50f3\"]"));
-        //TODO: Assert Status
+        Assert.assertEquals(status.getText(),"Don’t cheat...\n" +
+                "If you’re not happy just leave...");
+    }
+
+    @DataProvider(name = "provideLoginData")
+    public Object[][] dataProvider1() {
+        return new Object[][]{{"sonam.thale09@gmail.com", "Narendra@143"}};
+    }
+
+    @Test(groups = {"smoke", "regression"}, dataProvider = "provideLoginData")
+    public void facebookLogin(String userName, String password) throws InterruptedException {
+        WebDriver driver = WebDriverServices.getWebDriverInstance();
+        driver.get("https://www.facebook.com");
+        FacebookLoginPage facebookLoginPage = new FacebookLoginPage(driver);
+        facebookLoginPage.login(userName, password);
+        //TODO: Assert Home Button is displayed
     }
 
     @Test(groups = {"Smoke"}, priority = 1)
     public void signUpForNewUser() {
         WebDriver driver = WebDriverServices.getWebDriverInstance();
         driver.get("https://www.facebook.com");
-
         FacebookSignUpPage facebookSignUpPage = new FacebookSignUpPage(driver);
         facebookSignUpPage.signUp();
         //TODO: Assert Profile Details
-    }
-
-    @Test(groups = {"smoke", "regression"})
-    public void getMyPosts() {
-        WebDriver driver = WebDriverServices.getWebDriverInstance();
-        driver.get("https://www.facebook.com");
-
-        FacebookLoginPage facebookLoginPage = new FacebookLoginPage(driver);
-        facebookLoginPage.login("sonam.thale09@gmail.com", "Narendra@143");
-        FacebookHomePage facebookHomePage = new FacebookHomePage(driver);
-        facebookHomePage.getLatestPosts();
-        //TODO: Assert Number of post more than 3
     }
 
     @DataProvider(name = "provideStatusData")
@@ -70,12 +76,10 @@ public class FacebookTest {
         return new Object[][]{{"good morning"}, {"good afternoon"}, {"good night"}};
     }
 
-    //TODO:  Iterate this test 3 times posting new status every time
     @Test(groups = {"smoke", "regression"}, dataProvider = "provideStatusData")
     public void myNewPost(String status) throws InterruptedException {
         WebDriver driver = WebDriverServices.getWebDriverInstance();
         driver.get("https://www.facebook.com");
-
         FacebookLoginPage facebookLoginPage = new FacebookLoginPage(driver);
         facebookLoginPage.login("sonam.thale09@gmail.com", "Narendra@143");
         FacebookHomePage facebookHomePage = new FacebookHomePage(driver);
@@ -83,17 +87,15 @@ public class FacebookTest {
         //TODO:  Assert newly posted status
     }
 
-    @DataProvider(name = "provideLoginData")
-    public Object[][] dataProvider1() {
-        return new Object[][]{{"sonam.thale09@gmail.com", "Narendra@143"}, {"UserName1", "Password1"}};
-    }
-
-    @Test(groups = {"smoke", "regression"}, dataProvider = "provideLoginData")
-    public void facebookLogin(String userName, String password) throws InterruptedException {
+    @Test(groups = {"smoke", "regression", "notCompleted"})
+    public void getMyPosts() {
         WebDriver driver = WebDriverServices.getWebDriverInstance();
         driver.get("https://www.facebook.com");
-
         FacebookLoginPage facebookLoginPage = new FacebookLoginPage(driver);
-        facebookLoginPage.login(userName, password);
+        facebookLoginPage.login("sonam.thale09@gmail.com", "Narendra@143");
+        FacebookHomePage facebookHomePage = new FacebookHomePage(driver);
+        facebookHomePage.getLatestPosts();
     }
+
+
 }

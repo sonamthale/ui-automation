@@ -1,9 +1,9 @@
 <suite name="Smoke" verbose="1" parallel="true" thread-count="5">
-    <test name="test1">
+    <test name="SmokeTest">
         <groups>
             <run>
-                <exclude name="nothing"/>
-                <include name="login2"/>
+                <exclude name="notCompleted"/>
+                <include name="smoke"/>
             </run>
         </groups>
         <test name="test2">

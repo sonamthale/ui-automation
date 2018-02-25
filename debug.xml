@@ -1,10 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="smoke" verbose="1" parallel="methods" thread-count="5">
-    <test name="MySuite">
+<suite name="debug" verbose="1">
+    <test name="debugTest">
         <groups>
             <run>
-                <exclude name="nothing"/>
-                <include name="login2"/>
+                <include name="debug"/>
             </run>
         </groups>
         <packages>
