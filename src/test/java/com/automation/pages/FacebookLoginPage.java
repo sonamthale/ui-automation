@@ -23,9 +23,9 @@ public class FacebookLoginPage {
         return driver.findElement(By.xpath("//label[@id='loginbutton']"));
     }
 
-    public void login(){
-        emailTextBox().sendKeys("sonam.thale09@gmail.com");
-        passwordTextBox().sendKeys("Narendra@143");
+    public void login(String userName, String password){
+        emailTextBox().sendKeys(userName);
+        passwordTextBox().sendKeys(password);
         loginButton().click();
     }
 }

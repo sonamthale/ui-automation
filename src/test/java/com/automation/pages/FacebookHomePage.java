@@ -35,11 +35,11 @@ public class FacebookHomePage {
                 By.xpath("//span[text()='Post']/ancestor::button[@type='submit']"));
     }
 
-    public void postNewStatus() throws InterruptedException {
+    public void postNewStatus(String status) throws InterruptedException {
         Thread.sleep(2000);
         postGrid().click();
         Thread.sleep(2000);
-        newPost().sendKeys("Good Evening All");
+        newPost().sendKeys(status);
         postButton().sendKeys(Keys.ENTER);
     }
 

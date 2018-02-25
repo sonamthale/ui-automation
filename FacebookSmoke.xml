@@ -1,0 +1,15 @@
+<suite name="Smoke" verbose="1" parallel="true" thread-count="5">
+    <test name="test1">
+        <groups>
+            <run>
+                <exclude name="nothing"/>
+                <include name="login2"/>
+            </run>
+        </groups>
+        <test name="test2">
+            <classes>
+                <class name="com.automation.tests.FacebookTest"/>
+            </classes>
+        </test>
+    </test>
+</suite>
